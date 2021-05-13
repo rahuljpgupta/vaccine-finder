@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.Header {
+  border-bottom: 1px solid;
+  text-align: center;
+}
+
+.Body {
+  
+}
+
+.footer {
+  color: white;
+  background-color: gray;
+  text-align: center;
+  border-top: 1px solid;
+  position: fixed;
+  bottom: 0rem;
+  width: 100%;
+}
