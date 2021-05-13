@@ -1,4 +1,4 @@
-import { Select, MenuItem, Input, TableContainer, Table, TableHead, TableRow, TableCell, Paper, makeStyles, TableBody }from '@material-ui/core';
+import { Select, MenuItem, TableContainer, Table, TableHead, TableRow, TableCell, Paper, TableBody }from '@material-ui/core';
 import axios from 'axios';
 import { Component } from 'react';
 
@@ -22,7 +22,7 @@ class Body extends Component {
       axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${
         district.district_id
       }&date=${dateToday}`));
-    const result = Promise.all(alldistrictsRequest)
+    Promise.all(alldistrictsRequest)
     .then(res => {
       const sessions = res.map(item => item.data.sessions);
       this.setState({availableSessions: sessions.reduce((sessions, item) => {
