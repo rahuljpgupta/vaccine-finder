@@ -1,16 +1,11 @@
-import { connect } from 'react-redux';
+import MailIcon from '@material-ui/icons/Mail';
 
-function Footer(props) {
+function Footer() {
     return (
         <div className="footer">
-            <h4>{props.username}</h4>
+            <h4>Want to report bugs or get in touch? Feel free to contact me. <MailIcon /> <u>rahuljpgupta@gmail.com</u></h4>
         </div>
     );
 }
 
-
-const mapStateToProps = state => ({
-    username: state.employeeReducer.name
-})
-
-export default connect(mapStateToProps)(Footer);
+export default Footer;

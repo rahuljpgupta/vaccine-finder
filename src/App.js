@@ -27,7 +27,7 @@ class App extends Component {
   }
   render() {
     const { stateData } = this.state;
-    console.log(stateData)
+
     return (
       <Provider store={store}>
         <div className="App">
