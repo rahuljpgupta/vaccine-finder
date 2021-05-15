@@ -170,7 +170,7 @@ class Body extends Component {
               }
               label="Covishield"
             />
-            <div><a className="cowin-link" href="https://cowin.gov.in" target="_blank">CoWin</a></div>
+            <div><a className="cowin-link" href="https://cowin.gov.in" target="_blank" rel="noreferrer">CoWin</a></div>
           </div>
           {filtererdAvaialableSessions && (
           <div>
