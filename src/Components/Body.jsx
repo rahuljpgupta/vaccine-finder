@@ -99,41 +99,47 @@ class Body extends Component {
       return (
         <div className="body">
           <div className="body-controls">
-            <FormControl className="dropdown-wrapper">
-              <InputLabel id="state-simple-select-label">Select State</InputLabel>
-              <Select
-                id="state-simple-select"
-                onChange={this.handleChange}
-                className="state-dropdown"
-                labelId="state-simple-select-label"
-                name="selectedState"
-              >
-                {states && states.map((state) => (
-                  <MenuItem key={state.state_id} value={state}>
-                    {state.state_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl className="dropdown-wrapper">
-              <InputLabel id="date-simple-select-label">Select Date</InputLabel>
-              <Select
-                id="date-simple-select"
-                onChange={this.handleChange}
-                className="state-dropdown"
-                labelId="date-simple-select-label"
-                name="selectedDate"
-              >
-                {this.dates.map((date) => (
-                  <MenuItem key={date.value} value={date}>
-                    {date.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <div>
+              <FormControl className="dropdown-wrapper">
+                <InputLabel id="state-simple-select-label">Select State</InputLabel>
+                <Select
+                  id="state-simple-select"
+                  onChange={this.handleChange}
+                  className="state-dropdown"
+                  labelId="state-simple-select-label"
+                  name="selectedState"
+                >
+                  {states && states.map((state) => (
+                    <MenuItem key={state.state_id} value={state}>
+                      {state.state_name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl className="dropdown-wrapper">
+                <InputLabel id="date-simple-select-label">Select Date</InputLabel>
+                <Select
+                  id="date-simple-select"
+                  onChange={this.handleChange}
+                  className="state-dropdown"
+                  labelId="date-simple-select-label"
+                  name="selectedDate"
+                >
+                  {this.dates.map((date) => (
+                    <MenuItem key={date.value} value={date}>
+                      {date.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div className="search-button-wrapper">
             <Button variant="contained" color="primary" onClick={this.handleSearch} className="dropdown-wrapper" >
               Search
             </Button>
+            </div>
             <div className="state-dropdown"></div>
             <FormControlLabel
               control={

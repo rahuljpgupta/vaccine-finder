@@ -25,9 +25,22 @@
   width: 200px;
 }
 
-.body-controls {
+/* .body-controls {
   margin: 10px;
   display: flex;
+} */
+
+@media screen and (min-width: 900px) {
+  .body-controls {
+    margin: 15px;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 899px) {
+  .search-button-wrapper {
+    margin-top: 10px;
+  }
 }
 
 .dropdown-wrapper {
@@ -37,4 +50,5 @@
 .cowin-link {
   position: absolute;
   right: 1rem;
+  top: 70px;
 }
