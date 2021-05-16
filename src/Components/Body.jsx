@@ -2,6 +2,7 @@ import { Select, MenuItem, TableContainer, Table, TableHead, TableRow, TableCell
   FormControlLabel, Checkbox }from '@material-ui/core';
 import axios from 'axios';
 import { Component } from 'react';
+import cloneDeep from 'lodash/cloneDeep'
 
 class Body extends Component {
   constructor(props) {
@@ -74,10 +75,10 @@ class Body extends Component {
   getFiltererdAvaialableSessions = availableSessions => {
     if(!availableSessions) return;
     const { eighteenPlus, covaxin, coviShield } = this.state;
-    let filtererdAvaialableSessions = availableSessions;
+    let filtererdAvaialableSessions =  cloneDeep(availableSessions);
 
     if(eighteenPlus) {
-      filtererdAvaialableSessions = availableSessions.filter(session => session.min_age_limit > 17 && session.min_age_limit < 45)
+      filtererdAvaialableSessions = filtererdAvaialableSessions.filter(session => session.min_age_limit > 17 && session.min_age_limit < 45)
     }
 
     if(!covaxin) {
@@ -87,8 +88,8 @@ class Body extends Component {
     if(!coviShield) {
       filtererdAvaialableSessions = filtererdAvaialableSessions.filter(session => session.vaccine !== 'COVISHIELD')
     }
-    // console.log(filtererdAvaialableSessions)
-    return filtererdAvaialableSessions
+
+    return filtererdAvaialableSessions;
   }
 
     render(){
@@ -178,7 +179,7 @@ class Body extends Component {
             />
             <div><a className="cowin-link" href="https://cowin.gov.in" target="_blank" rel="noreferrer">CoWin</a></div>
           </div>
-          {filtererdAvaialableSessions && (
+          {filtererdAvaialableSessions && filtererdAvaialableSessions.length > 0 && (
           <div>
           <h4 style={{textAlign: 'left', marginLeft:'1rem'}}>Vaccine availablity: </h4>
 
@@ -198,8 +199,8 @@ class Body extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filtererdAvaialableSessions.map((row) => (
-                  <TableRow key={row.name}>
+                {filtererdAvaialableSessions.map((row, index) => (
+                  <TableRow key={`${row.name}-${index}`}>
                     <TableCell component="th" scope="row">
                       {row.district_name}
                     </TableCell>
