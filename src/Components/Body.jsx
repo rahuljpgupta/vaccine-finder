@@ -23,7 +23,7 @@ class Body extends Component {
   getDateToday = (selectedDate) => {
     const date = new Date();
 
-    return selectedDate && `${date.getDate() + selectedDate.value}-${date.getMonth()}-${date.getFullYear()}`;
+    return selectedDate && `${date.getDate() + selectedDate.value}-${date.getMonth()+1}-${date.getFullYear()}`;
   }
 
   fetchVaccineAvailability = (districts) => {
