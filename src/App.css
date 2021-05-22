@@ -43,6 +43,12 @@
   }
 }
 
+@media screen and (min-width: 900px) {
+  .search-button-wrapper {
+    margin-top: 25px;
+  }
+}
+
 .dropdown-wrapper {
   margin-left: 20px !important;
 }

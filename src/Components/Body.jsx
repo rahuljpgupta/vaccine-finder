@@ -2,7 +2,12 @@ import { Select, MenuItem, TableContainer, Table, TableHead, TableRow, TableCell
   FormControlLabel, Checkbox }from '@material-ui/core';
 import axios from 'axios';
 import { Component } from 'react';
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 class Body extends Component {
   constructor(props) {
@@ -12,24 +17,20 @@ class Body extends Component {
       districts: null,
       eighteenPlus: false,
       covaxin: true,
-      coviShield: true
+      coviShield: true,
+      selectedDate: new Date(),
     }
-    this.dates = [
-      {value: 0, name: 'Today'},
-      {value: 1, name: 'Tomorrow'},
-      {value: 2, name: 'Day after Tomorrow'}
-    ]
   }
 
-  getDateToday = (selectedDate) => {
-    const date = new Date();
+  getParsedDate = (selectedDate) => {
+    const date = new Date(selectedDate);
 
-    return selectedDate && `${date.getDate() + selectedDate.value}-${date.getMonth()+1}-${date.getFullYear()}`;
+    return selectedDate && `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
   }
 
   fetchVaccineAvailability = (districts) => {
     const { selectedDate } = this.state;
-    const date = this.getDateToday(selectedDate);
+    const date = this.getParsedDate(selectedDate);
 
     const alldistrictsRequest = date && districts && districts.map(district =>
       axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${
@@ -45,7 +46,6 @@ class Body extends Component {
     })
     .catch(error => {
       alert("Too many requests. Please try after 5 minutes.")
-      // console.log(error)
     });
   }
 
@@ -57,6 +57,10 @@ class Body extends Component {
       })
       this.fetchVaccineAvailability(res.data.districts);
     })
+  }
+
+  handleDateChange = date => {
+    this.setState({selectedDate: date})
   }
 
   handleChange = e => {
@@ -93,14 +97,14 @@ class Body extends Component {
   }
 
     render(){
-      const { availableSessions } = this.state;
+      const { availableSessions, selectedDate } = this.state;
       const { states } = this.props;
       const filtererdAvaialableSessions = this.getFiltererdAvaialableSessions(availableSessions);
 
       return (
         <div className="body">
           <div className="body-controls">
-            <div>
+            <div style={{paddingTop: '16px'}}>
               <FormControl className="dropdown-wrapper">
                 <InputLabel id="state-simple-select-label">Select State</InputLabel>
                 <Select
@@ -118,23 +122,22 @@ class Body extends Component {
                 </Select>
               </FormControl>
             </div>
-            <div>
-              <FormControl className="dropdown-wrapper">
-                <InputLabel id="date-simple-select-label">Select Date</InputLabel>
-                <Select
-                  id="date-simple-select"
-                  onChange={this.handleChange}
-                  className="state-dropdown"
-                  labelId="date-simple-select-label"
-                  name="selectedDate"
-                >
-                  {this.dates.map((date) => (
-                    <MenuItem key={date.value} value={date}>
-                      {date.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <div className="dropdown-wrapper">
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                className="state-dropdown"
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Select Date"
+                value={selectedDate}
+                onChange={this.handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
             </div>
             <div className="search-button-wrapper">
             <Button variant="contained" color="primary" onClick={this.handleSearch} className="dropdown-wrapper" >
